@@ -46,6 +46,10 @@ def predict(model, features, model_config, DATA_PATH):
     for i in tqdm(range(len(keys))):
         preds.append(model.predict(features[i, -90:, :][None, ...]))
 
+    pred_median = np.median(features[:, -90:, :], axis=1, keepdims=True)
+
+    preds = preds + pred_median
+
     preds = np.array(preds).squeeze()
     subm = pd.read_csv(DATA_PATH + 'key_2.csv')
     dict_val = dict(zip(list(range(62)), 
@@ -80,5 +84,5 @@ def train_and_predict():
 
     predict(model, features, model_config, DATA_PATH)
 
-   
+
 train_and_predict()

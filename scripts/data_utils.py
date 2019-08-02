@@ -5,7 +5,7 @@ from tqdm import tqdm
 
 class DataConfig():
 
-    def __init__(self, window_train=90, window_pred=62, batch_size=64):
+    def __init__(self, window_train=90, window_pred=62, batch_size=128):
 
         self.window_train = window_train
         self.window_pred = window_pred
@@ -19,6 +19,9 @@ def generate_windows(features, data_config):
     for i in range(0, low_boundary, data_config.window_pred):
         X = features[:, i:i + data_config.window_train, :]
         Y = features[:, i + data_config.window_train:i + data_config.window_train + data_config.window_pred,:]
+        median = np.median(X, axis=1, keepdims=True)
+        X = X - median
+        Y = Y - median
         pair.append([X, Y])
 
     return pair

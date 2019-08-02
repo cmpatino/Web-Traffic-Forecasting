@@ -5,7 +5,7 @@ from keras.layers import Dense
 
 class ModelConfig():
 
-    def __init__(self, model_name, epochs=10):
+    def __init__(self, model_name, epochs=5):
 
         self.model_name = model_name
         self.epochs = epochs
