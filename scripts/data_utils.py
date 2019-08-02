@@ -28,14 +28,14 @@ def generate_windows(features, data_config):
 
 
 def generator(pairs, window_train, windows_pred, batch_size):
-    # epochs is the len of pairs 
+    # epochs is the len of pairs
     while (1):
         for X, Y in pairs:
             m, n, _ = X.shape
             for i in range(0, m, batch_size):
                 X_batch = X[i:i + batch_size, :, :]
                 y_batch = Y[i:i + batch_size, :, 0]
-                assert pd.isna(X_batch).sum().sum() == 0 
+                assert pd.isna(X_batch).sum().sum() == 0
                 yield X_batch, y_batch
 
 
@@ -52,11 +52,11 @@ def get_lag_optimized(timeseries, lag_values, n_days):
     """
 
     n_features = len(lag_values) + 1 + 2
+    median = np.nanmedian(timeseries)
+    mean = np.nanmean(timeseries)
     timeseries[np.isnan(timeseries)] = median
     timeseries = np.log1p(timeseries)
     features = np.empty((n_days, n_features))
-    median = np.nanmedian(timeseries)
-    mean = np.nanmean(timeseries)
     for i in range(timeseries.shape[0]):
         x = np.zeros((n_features))
         x[0] = timeseries[i]

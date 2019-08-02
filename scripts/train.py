@@ -11,7 +11,7 @@ batch_size = 64
 
 def train(DATA_PATH, MATRIX_PATH, MODEL_PATH, data_config, model_config):
 
-    features = du.create_features_optimized(DATA_PATH, MATRIX_PATH)
+    features = du.create_features_optimized(DATA_PATH, MATRIX_PATH, generate_matrix=True)
 
     pair = du.generate_windows(features, data_config)
     m = pair[0][0].shape[0]
