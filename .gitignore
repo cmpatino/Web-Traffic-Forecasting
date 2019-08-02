@@ -5,6 +5,11 @@ data/input/key_2.csv
 data/input/sample_submission_1.csv
 data/input/train_1.csv
 data/input/train_2.csv
+*.npy
+
+# Credentials
+/credentials/*
+
 
 # Submissions
 /submissions/*
@@ -12,3 +17,6 @@ data/input/train_2.csv
 # Python Checkpoint Files
 .ipynb_checkpoints
 __pycache__
+
+
+
