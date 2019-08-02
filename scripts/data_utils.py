@@ -27,8 +27,8 @@ def generate_windows(features, data_config):
 def generator(pairs, window_train, windows_pred, batch_size):
     # epochs is the len of pairs 
     while (1):
-        for X,Y in pairs:
-            m,n, _ = X.shape
+        for X, Y in pairs:
+            m, n, _ = X.shape
             for i in range(0, m, batch_size):
                 X_batch = X[i:i + batch_size, :, :]
                 y_batch = Y[i:i + batch_size, :, 0]
@@ -81,6 +81,7 @@ def create_features_optimized(DATA_PATH, MATRIX_PATH, generate_matrix=False):
     """
 
     if not generate_matrix:
+        print('Loading Matrix from Memory')
         X_train = np.load(MATRIX_PATH + 'feature_matrix.npy')
         return X_train
 
@@ -104,10 +105,3 @@ def create_features_optimized(DATA_PATH, MATRIX_PATH, generate_matrix=False):
     X_train = X_train.astype('int32')
     np.save(MATRIX_PATH + 'feature_matrix.npy', X_train)
     return X_train
-
-
-DATA_PATH = '../data/input/'
-MATRIX_PATH = '../data/'
-
-X_train = create_features_optimized(DATA_PATH, MATRIX_PATH, 
-                                    generate_matrix=True)

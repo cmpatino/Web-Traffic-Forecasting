@@ -79,4 +79,6 @@ def train_and_predict():
                             data_config, model_config)
 
     predict(model, features, model_config, DATA_PATH)
-    
+
+   
+train_and_predict()
