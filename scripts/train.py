@@ -46,13 +46,15 @@ def predict(model, features, model_config, DATA_PATH):
     for i in tqdm(range(len(keys))):
         preds.append(model.predict(features[i, -90:, :][None, ...]))
 
-    pred_median = np.median(features[:, -90:, :], axis=1, keepdims=True)
+    #pred_median = np.median(features[:, -90:, :],
+    #                        axis=1, keepdims=True)[..., None]
+    preds = np.array(preds)
 
-    preds = preds + pred_median
+    #preds = preds + pred_median
 
     preds = np.array(preds).squeeze()
     subm = pd.read_csv(DATA_PATH + 'key_2.csv')
-    dict_val = dict(zip(list(range(62)), 
+    dict_val = dict(zip(list(range(62)),
                         sorted(subm.iloc[0:62].Page.str[-10:])))
 
     aux = pd.DataFrame(preds)
@@ -79,7 +81,7 @@ def train_and_predict():
     model_name = 'baseline'
     model_config = models.ModelConfig(model_name=model_name)
 
-    features, model = train(DATA_PATH, MATRIX_PATH, MODEL_PATH, 
+    features, model = train(DATA_PATH, MATRIX_PATH, MODEL_PATH,
                             data_config, model_config)
 
     predict(model, features, model_config, DATA_PATH)
