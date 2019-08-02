@@ -55,7 +55,9 @@ def get_lag_optimized(timeseries, lag_values, n_days):
     median = np.nanmedian(timeseries)
     mean = np.nanmean(timeseries)
     timeseries[np.isnan(timeseries)] = median
+    timeseries = timeseries.astype('int32')
     timeseries = np.log1p(timeseries)
+    assert np.isnan(timeseries).sum() == 0
     features = np.empty((n_days, n_features))
     for i in range(timeseries.shape[0]):
         x = np.zeros((n_features))
@@ -100,7 +102,6 @@ def create_features_optimized(DATA_PATH, MATRIX_PATH, generate_matrix=False):
 
     train_array = train_df.drop('Page', axis=1).values
     del train_df
-    train_array = train_array.astype('int32')
 
     X_train = np.empty((n_series, n_days, n_features))
     for i in tqdm(range(len(train_array))):
