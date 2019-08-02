@@ -49,7 +49,7 @@ def predict(model, features, model_config, DATA_PATH):
     #pred_median = np.median(features[:, -90:, :],
     #                        axis=1, keepdims=True)[..., None]
     preds = np.array(preds)
-
+    preds = np.expm1(preds)
     #preds = preds + pred_median
 
     preds = np.array(preds).squeeze()

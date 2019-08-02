@@ -52,10 +52,11 @@ def get_lag_optimized(timeseries, lag_values, n_days):
     """
 
     n_features = len(lag_values) + 1 + 2
+    timeseries[np.isnan(timeseries)] = median
+    timeseries = np.log1p(timeseries)
     features = np.empty((n_days, n_features))
     median = np.nanmedian(timeseries)
     mean = np.nanmean(timeseries)
-    timeseries[np.isnan(timeseries)] = median
     for i in range(timeseries.shape[0]):
         x = np.zeros((n_features))
         x[0] = timeseries[i]
