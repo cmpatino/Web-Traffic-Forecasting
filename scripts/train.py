@@ -46,11 +46,11 @@ def predict(model, features, model_config, DATA_PATH):
     for i in tqdm(range(len(keys)), ascii=True):
         preds.append(model.predict(features[i, -90:, :][None, ...]))
 
-    #pred_median = np.median(features[:, -90:, :],
-    #                        axis=1, keepdims=True)[..., None]
+    pred_median = np.median(features[:, -90:, :],
+                            axis=1, keepdims=True)[..., None]
     preds = np.array(preds)
-    preds = np.expm1(preds)
-    #preds = preds + pred_median
+    # preds = np.expm1(preds)
+    preds = preds + pred_median
 
     preds = np.array(preds).squeeze()
     subm = pd.read_csv(DATA_PATH + 'key_2.csv')

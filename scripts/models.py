@@ -14,7 +14,7 @@ class ModelConfig():
 def get_baseline_model(data_config):
 
     model = Sequential()
-    model.add(CuDNNLSTM(100, input_shape=(data_config.window_train, 6)))
+    model.add(CuDNNLSTM(100, input_shape=(data_config.window_train, 4)))
     model.add(Dense(data_config.window_pred))
     model.compile(optimizer='adam', loss='mse')
 

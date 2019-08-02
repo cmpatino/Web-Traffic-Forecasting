@@ -19,9 +19,9 @@ def generate_windows(features, data_config):
     for i in range(0, low_boundary, data_config.window_pred):
         X = features[:, i:i + data_config.window_train, :]
         Y = features[:, i + data_config.window_train:i + data_config.window_train + data_config.window_pred,:]
-        #median = np.median(X, axis=1, keepdims=True)
-        #X = X - median
-        #Y = Y - median
+        median = np.median(X, axis=1, keepdims=True)
+        X = X - median
+        Y = Y - median
         pair.append([X, Y])
 
     return pair
@@ -51,7 +51,7 @@ def get_lag_optimized(timeseries, lag_values, n_days):
         np.ndarray -- Array of shape (n_days, n_features)
     """
 
-    n_features = len(lag_values) + 1 + 2
+    n_features = len(lag_values) + 1 # + 2
     median = np.nanmedian(timeseries)
     mean = np.nanmean(timeseries)
     timeseries[np.isnan(timeseries)] = median
@@ -71,8 +71,8 @@ def get_lag_optimized(timeseries, lag_values, n_days):
             else:
                 x[j + 1] = timeseries[lag_index]
 
-        x[-2] = median
-        x[-1] = mean
+        # x[-2] = median
+        # x[-1] = mean
         features[i] = x
 
     return features
@@ -98,7 +98,7 @@ def create_features_optimized(DATA_PATH, MATRIX_PATH, generate_matrix=False):
     n_series = train_df.shape[0]
     n_days = train_df.shape[1] - 1
     lag_values = [365, 180, 90]
-    n_features = len(lag_values) + 1 + 2
+    n_features = len(lag_values) + 1 # + 2
 
     train_array = train_df.drop('Page', axis=1).values
     del train_df
