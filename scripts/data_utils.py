@@ -104,7 +104,7 @@ def create_features_optimized(DATA_PATH, MATRIX_PATH, generate_matrix=False):
     del train_df
 
     X_train = np.empty((n_series, n_days, n_features))
-    for i in tqdm(range(len(train_array))):
+    for i in tqdm(range(len(train_array)), ascii=True):
         x_t = train_array[i]
         features = get_lag_optimized(x_t, lag_values, n_days)
         X_train[i, ] = features

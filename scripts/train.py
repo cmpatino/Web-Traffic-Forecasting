@@ -43,7 +43,7 @@ def predict(model, features, model_config, DATA_PATH):
     keys = train.Page
     del train
     preds = []
-    for i in tqdm(range(len(keys))):
+    for i in tqdm(range(len(keys)), ascii=True):
         preds.append(model.predict(features[i, -90:, :][None, ...]))
 
     #pred_median = np.median(features[:, -90:, :],
